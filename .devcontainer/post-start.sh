@@ -2,7 +2,9 @@
 set -eux
 
 # paket
-if [[ ! -d ".config" ]]; then
+if [[ -d ".config" ]]; then
+    dotnet tool restore
+else
     dotnet new tool-manifest
     dotnet tool install paket --version 6.0.0-beta8
 fi
