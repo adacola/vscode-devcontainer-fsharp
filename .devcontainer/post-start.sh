@@ -2,12 +2,7 @@
 set -eux
 
 # paket
-if [[ -d ".config" ]]; then
-    dotnet tool restore
-else
-    dotnet new tool-manifest
-    dotnet tool install paket --version 6.0.0-beta8
-fi
+dotnet tool restore
 
 if [[ -f "paket.lock" ]]; then
     dotnet paket restore
