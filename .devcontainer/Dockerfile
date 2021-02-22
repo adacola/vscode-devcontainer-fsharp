@@ -30,7 +30,9 @@ RUN set -x \
         --home-dir /home/vscode \
         --create-home \
         --shell /bin/bash \
-        vscode
+        vscode \
+    && groupadd --gid 9999 docker \
+    && usermod -aG docker vscode
 
 # vscode extensions cache
 # https://code.visualstudio.com/docs/remote/containers-advanced#_avoiding-extension-reinstalls-on-container-rebuild
