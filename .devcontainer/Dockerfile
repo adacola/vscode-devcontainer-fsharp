@@ -30,14 +30,14 @@ RUN set -x \
         --home-dir /home/vscode \
         --create-home \
         --shell /bin/bash \
-        vscode \
-    && groupadd --gid 9999 docker \
-    && usermod -aG docker vscode
+        vscode
 
 # vscode extensions cache
 # https://code.visualstudio.com/docs/remote/containers-advanced#_avoiding-extension-reinstalls-on-container-rebuild
 RUN set -x \
     && mkdir -p /home/vscode/.vscode-server/extensions \
+    && mkdir -p /home/vscode/.vscode-server-insiders/extensions \
+    && chown -R vscode:vscode /home/vscode/.vscode-server \
     && chown -R vscode:vscode /home/vscode/.vscode-server
 
 # common tools
@@ -73,7 +73,9 @@ RUN set -x \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
         docker-ce-cli \
-    && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
+    && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* \
+    && groupadd --gid 9999 docker \
+    && usermod -aG docker vscode
 
 # docker compose
 RUN set -x \
@@ -85,6 +87,7 @@ USER vscode
 
 # setting.json for remote container server
 COPY vscode-settings.json /home/vscode/.vscode-server/data/Machine/settings.json
+COPY vscode-settings.json /home/vscode/.vscode-server-insiders/data/Machine/settings.json
 
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT [ "bash", "-eux", "/entrypoint.sh" ]
