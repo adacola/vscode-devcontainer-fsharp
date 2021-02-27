@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0-focal as devcontainer
+FROM mcr.microsoft.com/dotnet/sdk:6.0-focal as devcontainer
 
 RUN set -x \
     && apt-get update \
