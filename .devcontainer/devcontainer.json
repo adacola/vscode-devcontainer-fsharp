@@ -1,8 +1,6 @@
 {
     "name": "F# (.NET)",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
+    "image": "mcr.microsoft.com/devcontainers/dotnet:8.0",
     "customizations": {
         "vscode": {
             "extensions": [
